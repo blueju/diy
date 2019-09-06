@@ -1,28 +1,37 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld/>
+    <a-row>
+      <!-- 配置区 -->
+      <a-col :span="6">
+        <ConfigArea />
+      </a-col>
+      <!-- 搭配区 -->
+      <a-col :span="18">
+        <CollocationArea />
+      </a-col>
+    </a-row>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+// 配置区
+import ConfigArea from "./components/ConfigArea";
+// 搭配区
+import CollocationArea from "./components/CollocationArea";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
+    CollocationArea,
+    ConfigArea
   }
-}
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  width: 100%;
+  height: 100%;
+  background-color: #f2f4f5;
 }
 </style>
