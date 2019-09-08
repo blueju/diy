@@ -16,7 +16,9 @@
           v-for="(secondItem,secondIndex) in item.list"
           :key="secondIndex"
           @click="editConfig(index,secondIndex,item,secondItem)"
-        >{{ secondItem.brand }} {{ secondItem.model }} {{ secondItem.price }}</a-tag>
+          draggable="true"
+          @dragstart="dragstart($event,index,item,secondItem)"
+        >{{ secondItem.brand }} {{ secondItem.model }} ￥{{ secondItem.price }}</a-tag>
       </a-card>
     </section>
     <!-- 配置弹窗 -->
@@ -50,44 +52,15 @@
 </template>
 
 <script>
+import config from "./../../static/configAreaConfig";
+
 export default {
   data() {
     return {
       // 是否显示配置弹窗对话框
       showConfigDialog: false,
       // 配置
-      config: [
-        // CPU
-        {
-          name: "CPU",
-          list: [
-            {
-              brand: "AMD324234",
-              model: "2600X",
-              price: "1000",
-              purchaseLinks: "http://www.baidu.com"
-            },
-            {
-              brand: "Intel",
-              model: "9400F",
-              price: "1299",
-              purchaseLinks: "http://www.jd.com"
-            }
-          ]
-        },
-        // 主板
-        {
-          name: "主板",
-          list: [
-            {
-              brand: "MSI",
-              model: "B450M",
-              price: "1299",
-              purchaseLinks: "http://www.baidu.com"
-            }
-          ]
-        }
-      ],
+      config: config,
       // 配置弹窗的配置数据
       configDialogData: {
         index: 0, // 一级索引，代表配件，默认为0，即CPU
@@ -104,13 +77,46 @@ export default {
     };
   },
   methods: {
+    dragstart(e, index, item, secondItem) {
+      // debugger;
+      let draggedItem = {
+        name: item.name,
+        type: item.type,
+        index: index,
+        itemData: secondItem
+      };
+      e.dataTransfer.setData("draggedItem", JSON.stringify(draggedItem));
+      // localStorage.setItem("dragData", JSON.stringify(dragData));
+    },
+    //start ,end ,add,update, sort, remove 得到的都差不多
+    start: function(evt) {
+      console.log(evt);
+    },
+    end: function(evt) {
+      console.log(evt);
+      evt.item; //可以知道拖动的本身
+      evt.to; // 可以知道拖动的目标列表
+      evt.from; // 可以知道之前的列表
+      evt.oldIndex; // 可以知道拖动前的位置
+      evt.newIndex; // 可以知道拖动后的位置
+    },
+    // move: function(evt, originalEvent) {
+    //   console.log(evt);
+    //   console.log(originalEvent); //鼠标位置
+    // },
+    move({ relatedContext, draggedContext }) {
+      const relatedElement = relatedContext.element;
+      const draggedElement = draggedContext.element;
+      return (
+        (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
+      );
+    },
     /**
      * 添加配置
      * index  索引
      * item
      */
     addConfig(index, item, secondItem) {
-      debugger;
       // 打开配置弹窗对话框
       this.showConfigDialog = true;
       this.configDialogData.index = index;
@@ -123,7 +129,6 @@ export default {
      * item
      */
     editConfig(index, secondIndex, item, secondItem) {
-      debugger;
       // 打开配置弹窗对话框
       this.showConfigDialog = true;
       this.configDialogData.index = index;
@@ -134,7 +139,6 @@ export default {
     },
     // 提交配置弹窗表单
     submitConfigForm() {
-      debugger;
       let index = this.configDialogData.index;
       let secondIndex = this.configDialogData.secondIndex;
       switch (this.configDialogData.type) {
