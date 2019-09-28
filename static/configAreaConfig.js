@@ -4,31 +4,13 @@ const configAreaConfig = [
     {
         name: "CPU",
         type: "cpu",
-        list: [
-            {
-                brand: "AMD",
-                model: "2600X",
-                price: "1389",
-                purchaseLinks: "https://item.jd.com/6902454.html"
-            },
-            {
-                brand: "Intel",
-                model: "9400F",
-                price: "1199",
-                purchaseLinks: "https://item.jd.com/100002657042.html"
-            }
-        ]
+        list: []
     },
     // 主板
     {
         name: "主板",
         type: "mainboard",
-        list: [{
-            brand: "微星",
-            model: "迫击炮B450M",
-            price: "1200",
-            purchaseLinks: "https://item.jd.com"
-        }]
+        list: []
     },
     // 显卡
     {
