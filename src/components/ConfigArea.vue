@@ -18,6 +18,9 @@
           @click="editConfig(index,secondIndex,item,secondItem)"
           draggable="true"
           @dragstart="dragstart($event,index,item,secondItem)"
+          @contextmenu="showDeleteMenu"
+          :data-index="index"
+          :data-second-index="secondIndex"
         >{{ secondItem.brand }} {{ secondItem.model }} ￥{{ secondItem.price }}</a-tag>
       </a-card>
     </section>
@@ -48,6 +51,10 @@
         </a-form>
       </a-modal>
     </section>
+    <!-- 删除配件右键菜单 -->
+    <section class="deleteMenu">
+      <a-button type="danger" @click="deleteMachineFitting">删除此配件</a-button>
+    </section>
   </div>
 </template>
 
@@ -73,10 +80,28 @@ export default {
           price: "",
           purchaseLinks: ""
         }
-      }
+      },
+      // 要删除的配件的事件
+      needDeleteItem: null
     };
   },
   methods: {
+    // 显示删除菜单
+    showDeleteMenu(e) {
+      e.preventDefault();
+      let menu = document.getElementsByClassName("deleteMenu")[0];
+      menu.style.display = "block";
+      menu.style.left = e.clientX + "px";
+      menu.style.top = e.clientY + "px";
+      this.needDeleteItem = e;
+    },
+    // 删除配件
+    deleteMachineFitting() {
+      let index = this.needDeleteItem.target.dataset.index;
+      let secondIndex = this.needDeleteItem.target.dataset.secondIndex;
+      this.config[index].list.splice(secondIndex, 1);
+      document.getElementsByClassName("deleteMenu")[0].style.display = "none";
+    },
     dragstart(e, index, item, secondItem) {
       // debugger;
       let draggedItem = {
@@ -187,6 +212,12 @@ export default {
   // 配置弹窗
   .configDialog >>> .ant-form-item {
     margin-bottom: 10px;
+  }
+
+  // 删除配件
+  .deleteMenu {
+    display: none;
+    position: absolute;
   }
 }
 </style>
