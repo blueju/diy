@@ -95,17 +95,20 @@ export default {
     // 导入配置
     importConfig() {
       let importConfig = JSON.parse(localStorage.getItem("saveConfig"));
+      if (this.isAllEmpty(importConfig)) {
+        this.$message.success("无本地数据");
+        return;
+      }
       this.fittings = importConfig;
       this.$message.success("导入配置成功");
     },
 
-    // 导出配置
-    exportConfig() {
-      let needExportData = this.fittings;
+    // 判断搭配配置是否为空
+    isAllEmpty(data){
       let isAllEmpty;
-      for (const key in needExportData) {
-        if (needExportData.hasOwnProperty(key)) {
-          if (needExportData[key].haveData) {
+      for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          if (data[key].haveData) {
             isAllEmpty = false;
           } else {
             isAllEmpty = true;
@@ -113,7 +116,14 @@ export default {
         }
         break;
       }
-      if (isAllEmpty) {
+      return isAllEmpty
+    },
+
+    // 导出配置
+    exportConfig() {
+      debugger
+      let needExportData = this.fittings;
+      if (this.isAllEmpty(needExportData)) {
         this.$message.success("配置为空，请添加配置后再进行导出");
         return;
       }
@@ -163,6 +173,10 @@ export default {
 
     // 保存配置
     saveConfig() {
+      if (this.isAllEmpty(this.fittings)) {
+        this.$message.success("配置为空，请添加配置后再进行保存");
+        return;
+      }
       // 存入localStorage
       localStorage.setItem("saveConfig", JSON.stringify(this.fittings));
       this.$message.success("保存配置成功");
