@@ -29,8 +29,6 @@ export default {
     // 监听滚动事件
     listenScrollEvent() {
       window.addEventListener("scroll", () => {
-        console.log("scrolling...");
-        // debugger;
         let pageHeight = document.documentElement.scrollHeight;
         document.getElementById("app").style.height = `${pageHeight}px`;
       });

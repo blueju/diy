@@ -103,7 +103,6 @@ export default {
       document.getElementsByClassName("deleteMenu")[0].style.display = "none";
     },
     dragstart(e, index, item, secondItem) {
-      // debugger;
       let draggedItem = {
         name: item.name,
         type: item.type,
@@ -111,30 +110,6 @@ export default {
         itemData: secondItem
       };
       e.dataTransfer.setData("draggedItem", JSON.stringify(draggedItem));
-      // localStorage.setItem("dragData", JSON.stringify(dragData));
-    },
-    //start ,end ,add,update, sort, remove 得到的都差不多
-    start: function(evt) {
-      console.log(evt);
-    },
-    end: function(evt) {
-      console.log(evt);
-      evt.item; //可以知道拖动的本身
-      evt.to; // 可以知道拖动的目标列表
-      evt.from; // 可以知道之前的列表
-      evt.oldIndex; // 可以知道拖动前的位置
-      evt.newIndex; // 可以知道拖动后的位置
-    },
-    // move: function(evt, originalEvent) {
-    //   console.log(evt);
-    //   console.log(originalEvent); //鼠标位置
-    // },
-    move({ relatedContext, draggedContext }) {
-      const relatedElement = relatedContext.element;
-      const draggedElement = draggedContext.element;
-      return (
-        (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
-      );
     },
     /**
      * 添加配置

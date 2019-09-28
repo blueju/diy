@@ -78,7 +78,6 @@ export default {
   methods: {
     // 清空配置
     removeConfig() {
-      debugger;
       let object = this.fittings;
       for (const key in object) {
         if (object.hasOwnProperty(key)) {
@@ -96,15 +95,12 @@ export default {
     // 导入配置
     importConfig() {
       let importConfig = JSON.parse(localStorage.getItem("saveConfig"));
-      console.log(importConfig);
       this.fittings = importConfig;
-      console.log(this.fittings);
       this.$message.success("导入配置成功");
     },
 
     // 导出配置
     exportConfig() {
-      debugger;
       let needExportData = this.fittings;
       let isAllEmpty;
       for (const key in needExportData) {
@@ -125,7 +121,6 @@ export default {
       let columnTitle = `<tr><td></td><td>品牌</td><td>型号</td><td>价格</td><td>商品链接</td></tr>`;
       let excelMainData = "";
       // 循环遍历，每行加入tr标签，每个单元格加td标签
-      debugger;
       for (let i = 0; i < needExportData.length; i++) {
         excelMainData = excelMainData + "<tr>";
         for (let key in needExportData[i]) {
@@ -168,7 +163,6 @@ export default {
 
     // 保存配置
     saveConfig() {
-      console.log(this.fittings);
       // 存入localStorage
       localStorage.setItem("saveConfig", JSON.stringify(this.fittings));
       this.$message.success("保存配置成功");
@@ -176,7 +170,6 @@ export default {
 
     // 点击删除按钮，删除此项配件项
     deleteFittingsItem(item, index) {
-      debugger;
       for (let key in item.formData) {
         if (item.formData.hasOwnProperty(key)) {
           item.formData[key] = "";
@@ -192,11 +185,9 @@ export default {
     },
     // 点击购物车图标，前往购物链接
     goShopping(link) {
-      debugger;
       window.open(link);
     },
     dragover(e) {
-      // debugger
       e.preventDefault();
     },
     drop(e) {
