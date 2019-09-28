@@ -78,6 +78,7 @@ export default {
   methods: {
     // 清空配置
     removeConfig() {
+      debugger
       let object = this.fittings;
       for (const key in object) {
         if (object.hasOwnProperty(key)) {
@@ -88,7 +89,6 @@ export default {
             }
           }
         }
-        break;
       }
     },
 
@@ -104,7 +104,7 @@ export default {
     },
 
     // 判断搭配配置是否为空
-    isAllEmpty(data){
+    isAllEmpty(data) {
       let isAllEmpty;
       for (const key in data) {
         if (data.hasOwnProperty(key)) {
@@ -116,12 +116,12 @@ export default {
         }
         break;
       }
-      return isAllEmpty
+      return isAllEmpty;
     },
 
     // 导出配置
     exportConfig() {
-      debugger
+      debugger;
       let needExportData = this.fittings;
       if (this.isAllEmpty(needExportData)) {
         this.$message.success("配置为空，请添加配置后再进行导出");
