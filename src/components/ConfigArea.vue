@@ -43,7 +43,7 @@
             <a-input v-model="configDialogData.formData.model" />
           </a-form-item>
           <a-form-item label="价格">
-            <a-input v-model="configDialogData.formData.price" />
+            <a-input-number v-model="configDialogData.formData.price" :min="1" />
           </a-form-item>
           <a-form-item label="链接">
             <a-input v-model="configDialogData.formData.purchaseLinks" />
