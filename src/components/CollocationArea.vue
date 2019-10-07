@@ -17,15 +17,15 @@
       <a-button
         slot="extra"
         type="primary"
-        class="config-button config-button-export"
-        @click="exportConfig"
-      >导出配置</a-button>
-      <a-button
-        slot="extra"
-        type="primary"
         class="config-button config-button-reset"
         @click="removeConfig"
       >清空配置</a-button>
+      <a-button
+        slot="extra"
+        type="primary"
+        class="config-button config-button-export"
+        @click="exportConfig"
+      >导出装机清单</a-button>
       <span slot="extra" class="total-price">￥ {{ totalPrice}}</span>
       <section id="item.type" v-for="(item,index) in fittings" :key="index">
         <h1>{{ item.name }}</h1>
@@ -120,7 +120,6 @@ export default {
 
     // 导出配置
     exportConfig() {
-      debugger;
       let needExportData = this.fittings;
       if (this.isAllEmpty(needExportData)) {
         this.$message.success("配置为空，请添加配置后再进行导出");
@@ -173,7 +172,7 @@ export default {
     // 保存配置
     saveConfig() {
       if (this.isAllEmpty(this.fittings)) {
-        this.$message.success("配置为空，请添加配置后再进行保存");
+        this.$message.warning("配置为空，请添加配置后再进行保存");
         return;
       }
       // 以哪种形式保存？浏览器localStorage保存：文件保存
