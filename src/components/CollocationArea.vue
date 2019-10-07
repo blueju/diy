@@ -179,10 +179,10 @@ export default {
       // 以哪种形式保存？浏览器localStorage保存：文件保存
       let _this = this;
       this.$confirm({
-        title: "保存形式",
-        content: "以哪种形式保存？浏览器localStorage保存：文件保存",
+        closable: true,
+        title: "请选择保存方式？",
         okText: "配置文件下载保存",
-        cancelText: "浏览器保存",
+        cancelText: "浏览器本地保存",
         onOk() {
           let downloadButton = document.createElement("a");
           let blob = new Blob([JSON.stringify(_this.fittings)]);
