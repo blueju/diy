@@ -89,6 +89,19 @@ export default {
           }
         }
       }
+      // 更新虚实线
+      this.$nextTick(() => {
+        let detailDomList = document
+          .getElementById("CollocationArea")
+          .querySelectorAll(".detail");
+        for (let i = 0; i < detailDomList.length; i++) {
+          // display不等于none时，说明此项里面有数据
+          if (detailDomList[i].style.display === "none") {
+            document.getElementsByClassName("layArea")[i].style.border =
+              "1px dashed #c1c1c1";
+          }
+        }
+      });
     },
 
     // 导入配置
@@ -100,6 +113,19 @@ export default {
       }
       this.fittings = importConfigData;
       this.$message.success("导入配置成功");
+      // 更新虚实线
+      this.$nextTick(() => {
+        let detailDomList = document
+          .getElementById("CollocationArea")
+          .querySelectorAll(".detail");
+        for (let i = 0; i < detailDomList.length; i++) {
+          // display不等于none时，说明此项里面有数据
+          if (detailDomList[i].style.display != "none") {
+            document.getElementsByClassName("layArea")[i].style.border =
+              "1px solid #c1c1c1";
+          }
+        }
+      });
     },
 
     // 判断搭配配置是否为空
