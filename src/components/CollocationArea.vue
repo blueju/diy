@@ -93,18 +93,18 @@ export default {
 
     // 导入配置
     importConfig() {
-      let importConfig = JSON.parse(localStorage.getItem("saveConfig"));
-      if (this.isAllEmpty(importConfig)) {
-        this.$message.success("无本地数据");
+      let importConfigData = JSON.parse(localStorage.getItem("saveConfig"));
+      if (this.isAllEmpty(importConfigData)) {
+        this.$message.warning("无本地数据");
         return;
       }
-      this.fittings = importConfig;
+      this.fittings = importConfigData;
       this.$message.success("导入配置成功");
     },
 
     // 判断搭配配置是否为空
     isAllEmpty(data) {
-      let isAllEmpty;
+      let isAllEmpty = true;
       for (const key in data) {
         if (data.hasOwnProperty(key)) {
           if (data[key].haveData) {
