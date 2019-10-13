@@ -12,8 +12,9 @@
         slot="extra"
         type="primary"
         class="config-button config-button-import"
-        @click="importConfig"
+        @click="triggerFileUploadDialog"
       >导入配置</a-button>
+      <input type="file" id="uploadInput" @change="importConfig" style="display:none" />
       <a-button
         slot="extra"
         type="primary"
@@ -103,41 +104,38 @@ export default {
         }
       });
     },
-
+    // 触发文件上传弹窗
+    triggerFileUploadDialog() {
+      document.getElementById("uploadInput").click();
+    },
     // 导入配置
     importConfig() {
       let _this = this;
-      this.$confirm({
-        closable: true,
-        title: "请选择导入方式？",
-        okText: "配置文件导入",
-        cancelText: "浏览器本地数据导入",
-        // 配置文件导入
-        onOk() {},
-        // 浏览器本地数据导入
-        onCancel() {
-          let importConfigData = JSON.parse(localStorage.getItem("saveConfig"));
-          if (this.isAllEmpty(importConfigData)) {
-            this.$message.warning("无本地数据");
-            return;
-          }
-          this.fittings = importConfigData;
-          this.$message.success("导入配置成功");
-          // 更新虚实线
-          this.$nextTick(() => {
-            let detailDomList = document
-              .getElementById("CollocationArea")
-              .querySelectorAll(".detail");
-            for (let i = 0; i < detailDomList.length; i++) {
-              // display不等于none时，说明此项里面有数据
-              if (detailDomList[i].style.display != "none") {
-                document.getElementsByClassName("layArea")[i].style.border =
-                  "1px solid #c1c1c1";
-              }
-            }
-          });
+      let fileReader = new FileReader();
+      fileReader.readAsText(document.getElementById("uploadInput").files[0]);
+      fileReader.onload = function() {
+        console.log(this);
+        let importConfigData = JSON.parse(this.result);
+        if (_this.isAllEmpty(importConfigData)) {
+          _this.$message.warning("无本地数据");
+          return;
         }
-      });
+        _this.fittings = importConfigData;
+        _this.$message.success("导入配置成功");
+        // 更新虚实线
+        _this.$nextTick(() => {
+          let detailDomList = document
+            .getElementById("CollocationArea")
+            .querySelectorAll(".detail");
+          for (let i = 0; i < detailDomList.length; i++) {
+            // display不等于none时，说明此项里面有数据
+            if (detailDomList[i].style.display != "none") {
+              document.getElementsByClassName("layArea")[i].style.border =
+                "1px solid #c1c1c1";
+            }
+          }
+        });
+      };
     },
 
     // 判断搭配配置是否为空
