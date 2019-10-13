@@ -1,19 +1,19 @@
 <template>
   <!-- 搭配区 -->
   <div id="CollocationArea">
-    <a-card title="搭配区">
+    <a-card title="硬件搭配区">
       <a-button
         slot="extra"
         type="primary"
         class="config-button config-button-save"
         @click="saveConfig"
-      >保存配置</a-button>
+      >保存搭配</a-button>
       <a-button
         slot="extra"
         type="primary"
         class="config-button config-button-import"
         @click="triggerFileUploadDialog"
-      >导入配置</a-button>
+      >导入搭配</a-button>
       <input
         type="file"
         id="uploadInput"
@@ -26,7 +26,7 @@
         type="primary"
         class="config-button config-button-reset"
         @click="removeConfig"
-      >清空配置</a-button>
+      >清空搭配</a-button>
       <a-button
         slot="extra"
         type="primary"
