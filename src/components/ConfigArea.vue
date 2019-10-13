@@ -3,6 +3,16 @@
   <div id="ConfigArea">
     <!-- 配件 -->
     <section class="machineFitting">
+      <a-card title="硬件配置区">
+        <a-button @click="saveHardwareConfigList">保存硬件配置</a-button>
+        <a-button @click="triggerFileUploadDialog">导入硬件配置</a-button>
+        <input
+          type="file"
+          id="importHardwareConfig"
+          @change="importHardwareConfigList"
+          style="display:none"
+        />
+      </a-card>
       <a-card v-for="(item,index) in config" :key="index" :title="item.name">
         <a-button
           slot="extra"
@@ -86,6 +96,37 @@ export default {
     };
   },
   methods: {
+    /**
+     * 保存硬件配置列表
+     */
+    saveHardwareConfigList() {
+      let ele = document.createElement("a");
+      let blob = new Blob([JSON.stringify(this.config)]);
+      let url = URL.createObjectURL(blob);
+      ele.href = url;
+      ele.download = "硬件配置" + new Date().toLocaleString() + ".diy_hardware";
+      ele.click();
+      ele = null;
+      URL.revokeObjectURL(url);
+    },
+    /**
+     * 触发文件上传弹窗
+     */
+    triggerFileUploadDialog() {
+      document.getElementById("importHardwareConfig").click();
+    },
+    /**
+     * 导入硬件配置信息列表
+     */
+    importHardwareConfigList() {
+      let file = document.getElementById("importHardwareConfig").files[0];
+      let fileReader = new FileReader();
+      fileReader.readAsText(file);
+      let _this = this;
+      fileReader.onload = function() {
+        _this.config = JSON.parse(this.result);
+      };
+    },
     // 显示删除菜单
     showDeleteMenu(e) {
       e.preventDefault();
