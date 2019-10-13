@@ -213,30 +213,14 @@ export default {
         this.$message.warning("配置为空，请添加配置后再进行保存");
         return;
       }
-      // 以哪种形式保存？浏览器localStorage保存：文件保存
-      let _this = this;
-      this.$confirm({
-        closable: true,
-        title: "请选择保存方式？",
-        okText: "配置文件下载保存",
-        cancelText: "浏览器本地保存",
-        onOk() {
-          let downloadButton = document.createElement("a");
-          let blob = new Blob([JSON.stringify(_this.fittings)]);
-          downloadButton.href = window.URL.createObjectURL(blob);
-          downloadButton.download =
-            "电脑清单配置文件" + new Date().toLocaleString() + ".json";
-          downloadButton.click();
-          downloadButton = null;
-        },
-        onCancel() {
-          // 存入localStorage
-          localStorage.setItem("saveConfig", JSON.stringify(_this.fittings));
-          _this.$message.success("保存配置成功");
-        }
-      });
+      let downloadButton = document.createElement("a");
+      let blob = new Blob([JSON.stringify(this.fittings)]);
+      downloadButton.href = window.URL.createObjectURL(blob);
+      downloadButton.download =
+        "装机清单配置文件" + new Date().toLocaleString() + ".json";
+      downloadButton.click();
+      downloadButton = null;
     },
-
     // 点击删除按钮，删除此项配件项
     deleteFittingsItem(item, index) {
       for (let key in item.formData) {
