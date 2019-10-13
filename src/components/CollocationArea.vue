@@ -14,7 +14,13 @@
         class="config-button config-button-import"
         @click="triggerFileUploadDialog"
       >导入配置</a-button>
-      <input type="file" id="uploadInput" @change="importConfig" style="display:none" />
+      <input
+        type="file"
+        id="uploadInput"
+        @change="importConfig"
+        style="display:none"
+        accept=".json"
+      />
       <a-button
         slot="extra"
         type="primary"
@@ -110,14 +116,22 @@ export default {
     },
     // 导入配置
     importConfig() {
+      if (
+        document.getElementById("uploadInput").files[0].type !=
+        "application/json"
+      ) {
+        this.$message.error("请上传正确的配置文件");
+        return;
+      }
       let _this = this;
       let fileReader = new FileReader();
       fileReader.readAsText(document.getElementById("uploadInput").files[0]);
       fileReader.onload = function() {
         console.log(this);
-        let importConfigData = JSON.parse(this.result);
+        let importConfigData =
+          this.result.length != 0 && JSON.parse(this.result);
         if (_this.isAllEmpty(importConfigData)) {
-          _this.$message.warning("无本地数据");
+          _this.$message.warning("文件无数据");
           return;
         }
         _this.fittings = importConfigData;
