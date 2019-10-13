@@ -85,6 +85,10 @@ export default {
   methods: {
     // 清空配置
     removeConfig() {
+      if (this.isAllEmpty(this.fittings)) {
+        this.$message.warning("配置为空，无需清空");
+        return;
+      }
       let object = this.fittings;
       for (const key in object) {
         if (object.hasOwnProperty(key)) {
