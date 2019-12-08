@@ -32,6 +32,9 @@ export default {
         let pageHeight = document.documentElement.scrollHeight;
         document.getElementById("app").style.height = `${pageHeight}px`;
       });
+      window.addEventListener("click", () => {
+        document.querySelector(".deleteMenu").style.display = "none";
+      });
     }
   },
   mounted() {
